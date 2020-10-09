@@ -505,11 +505,11 @@ object ResolveTests extends TestSuite {
         } catch {
           case e: ResolveException =>
             val expectedMessage =
-              """Resolution error: Error downloading com.chuusaiz:shapeless_2.13:2.3.3
-                |  not found: HOME/.ivy2/local/com.chuusaiz/shapeless_2.13/2.3.3/ivys/ivy.xml
-                |  not found: https://repo1.maven.org/maven2/com/chuusaiz/shapeless_2.13/2.3.3/shapeless_2.13-2.3.3.pom""".stripMargin
+              s"""Resolution error: Error downloading com.chuusaiz:shapeless_2.13:2.3.3
+                 |  not found: ${homepath("HOME", ".ivy2/local/com.chuusaiz/shapeless_2.13/2.3.3/ivys/ivy.xml")}
+                 |  not found: https://repo1.maven.org/maven2/com/chuusaiz/shapeless_2.13/2.3.3/shapeless_2.13-2.3.3.pom""".stripMargin
             val message = e.message.replace(System.getProperty("user.home"), "HOME")
-            assert(message == expectedMessage)
+            sameLines(message, expectedMessage)
             false
         }
       Predef.assert(!success, "Expected a resolution exception")
